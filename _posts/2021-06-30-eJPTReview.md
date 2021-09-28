@@ -43,6 +43,7 @@ Otros datos sobre el examen es que cuentas con 3 dias para culminar lo y que tu 
 1. Toma apuntes de todo lo que te parezca más relevante, te sera de ayuda en el examen.
 2. No te desesperes, cuentas con tiempo más que suficiente para afrontar el examen.
 3. Realiza todos los laboratorios que te ofrecen en el contenido de [INE](https://my.ine.com/path/a223968e-3a74-45ed-884d-2d16760b8bbd). 
-4. Revisa mi eJPT cheatsheet.
+4. Revisa como [Aprobar el eJPT a la primera](https://hacknotes.github.io/certificaciones/eJPTAprove/).
+5. Revisa mi [eJPT - Cheatsheet](https://github.com/hacknotes/eJPT-Cheatsheet)
 
 ![eJPT Certificate](/assets/images/eJPTCertificate.png)
