@@ -7,11 +7,11 @@ tags:
 toc: true
 toc_label: "Tabla de contenido"
 ---
-El presente artículo contiene una guía del procedimiento a llevar acabo para aprovar con éxito el examen de la certificacion [eJPT](https://elearnsecurity.com/product/ejpt-certification/).
+El presente artículo contiene una guía del procedimiento a llevar acabo para aprobar con éxito el examen de la certificación [eJPT](https://elearnsecurity.com/product/ejpt-certification/).
 
 ## Barrido de ping
 
-Una vez te conectes por **VPN** al laboratorio, lo primero que deberias hacer es un reconocimiento al sistema, encontrando activos, para lo cual los siguentes comandos te serian de ayuda:
+Una vez te conectes por **VPN** al laboratorio, lo primero que deberías hacer es un reconocimiento al sistema, encontrando activos, para lo cual los siguientes comandos te serian de ayuda:
 
 ```bash
 nmap -sn 10.10.10.0/24
@@ -19,7 +19,7 @@ fping -a -g 10.10.10.0/24 2>/dev/null
 ```
 ## Escaneo exhaustivo
 
-Ya en este punto, despues de tener tu lista de host activos, lo siguiente que deberías hacer es un escaneo más exhaustivo, es decir listar los puertos abiertos con los que cuentan los host, así mismo como los servicios y versiones que estan corriendo en ellos. No olvides ir guardando todos tus escaneos y datos relevantes encontrados.
+Ya en este punto, después de tener tu lista de host activos, lo siguiente que deberías hacer es un escaneo más exhaustivo, es decir listar los puertos abiertos con los que cuentan los host, así mismo como los servicios y versiones que están corriendo en ellos. No olvides ir guardando todos tus escaneos y datos relevantes encontrados.
 
 ```bash
 nmap -p- --open -n -v -T5 10.10.14.16 -oN puertos
@@ -28,7 +28,7 @@ nmap -sV -sC -p21,22,80 10.10.14.16 -oN serviciosVersiones
 nmap --script=vuln -p22,21,80,445 -v 10.10.14.16 -oN vulnScan
 nmap --script=smb-vuln* -p445 -v 10.10.14.16 -oN smbScan
 ```
-En esta etapa también debes ir realizando un reconocimiento a todos los servicios y puertos listados con los comandos anteriores, algunas cosas que deberias probar dependiendo el puerto y/o servicio seria:
+En esta etapa también debes ir realizando un reconocimiento a todos los servicios y puertos listados con los comandos anteriores, algunas cosas que deberías probar dependiendo el puerto y/o servicio seria:
 
 ### **Servicios Web**
 
@@ -81,7 +81,7 @@ hydra -l admin -P passlist.txt ftp://192.168.0.1
 hydra -L userlist.txt -P passlist.txt ftp://192.168.0.1
 ```
 **Pista:** 
-Después de encontrar lo que te solicitan podrias necesitar **unshadow** y **john**
+Después de encontrar lo que te solicitan podrías necesitar **unshadow** y **john**
 {: .notice--danger}
 
 ### Reverse Shell
@@ -98,7 +98,7 @@ msfconsole
 ```
 ### Enumeración de windows
 
-Una vez hayas conprometido el activo, deberás enumar lo, los siguientes comandos te serán de gran ayuda:
+Una vez hayas comprometido el activo, deberás enumerar lo, los siguientes comandos te serán de gran ayuda:
 ```bash
 dir /b/s "\*.conf*"
 dir /b/s "\*.txt*"
@@ -111,7 +111,7 @@ wmic logicaldisk get Caption,Description,providername
 
 ## Post Explotación
 
-Ahora, una vez hayas realizado todo lo anterior, deberiás preocuparte por descubrir nuevos activos y repetir los pasos anteriores si fuese necesario.
+Ahora, una vez hayas realizado todo lo anterior, deberías preocuparte por descubrir nuevos activos y repetir los pasos anteriores si fuese necesario.
 
 ### Wireshark
 ```bash
@@ -126,4 +126,3 @@ ip route add 10.10.10.0/24 via 10.10.11.1 dev tap0
 ## Recomendaciones
 - **No** olvides revisar el material que te entregan antes del examen.
 - Si deseas ver solo los comandos necesarios o alternativos para el examen, revisa mi [eJPT - Cheatsheet](https://github.com/hacknotes/eJPT-Cheatsheet)
-
