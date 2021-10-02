@@ -1,5 +1,5 @@
 ---
-title:  "Buffer Overflow 32 Bits Linux (Stack Based)"
+title:  "Stack Based Buffer Overflow 32 Bits Linux"
 categories: 
   - Buffer Overflow
 tags:
