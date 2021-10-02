@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
 ```
 ## Compilación
 
-En este caso vamos a compilar nuestro binario de tal manera que el **DEP** `(Data Execution Prevention)` este **activado**, esto quiere decir que en este binaro **no** seremos capaces de poder inyectar nuestro shellcode dentro de la pila como lo es en el caso del [Stack Based Buffer Overflow](https://hacknotes.github.io/buffer%20overflow/buff32linux/).
+En este caso vamos a compilar nuestro binario de tal manera que el **DEP** `(Data Execution Prevention)` este **activado**, esto quiere decir que en este binaro **no** seremos capaces de poder inyectar nuestro shellcode dentro de la pila como lo es en el caso del [Stack Based Buffer Overflow](https://hacknotes.github.io/buffer%20overflow/buff32linuxStackBased/).
 
 **Nota:** Si ejecutamos **file buff** nos dirá que es un binario ejecutable de 32 bits.
 {: .notice--danger}
