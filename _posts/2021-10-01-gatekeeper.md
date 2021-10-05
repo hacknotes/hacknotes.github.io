@@ -223,7 +223,7 @@ Vemos que es un ejecutable de 32 bits para windows.
 
 ## Laboratorio
 
-Para poder hacer un mejor análisis de `gatekeeper.exe` debemos optar por ejecutarlo en una máquina con características parecidas a la que lo aloja, es por eso que de manera previa enumeramos el [Sistema Operativo](http://localhost:4000/tryhackme/gatekeeper/#sistema-operativo).
+Para poder hacer un mejor análisis de `gatekeeper.exe` debemos optar por ejecutarlo en una máquina con características parecidas a la que lo aloja, es por eso que de manera previa enumeramos el [Sistema Operativo](https://hacknotes.github.io/tryhackme/gatekeeper/#sistema-operativo).
 
 Quiero aclarar que hay distintas formas de explotar `gatekeeper.exe`, pero para mí la forma más cómoda es la que veremos a continuación.
 
