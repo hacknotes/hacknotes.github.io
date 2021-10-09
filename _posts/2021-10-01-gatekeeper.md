@@ -1,7 +1,7 @@
 ---
-title:  "Gatekeeper - Writeup - Tryhackme"
+title:  "Gatekeeper - Writeup - TryHackme"
 categories: 
-  - Tryhackme
+  - TryHackme
 tags:
   - Buffer Overflow
   - Windows
@@ -10,9 +10,9 @@ toc: true
 toc_label: "Tabla de contenido"
 ---
 
-En este artículo estaré mostrando como resolver la máquina [Gatekeeper](https://tryhackme.com/room/gatekeeper) de Tryhackme.
+En este artículo estaré mostrando como resolver la máquina [Gatekeeper](https://tryhackme.com/room/gatekeeper) de TryHackme.
 
-Una de las cosas que nos permitirá esta máquina es explotar un binario vulnerable a buffer overflow, además que es una de las máquinas que recomiendan resolver previo al examen del **eCPPT** y decidí incorporarla a mi preparación previa al mismo.
+Una de las cosas que nos permitirá esta máquina es explotar un binario vulnerable a **buffer overflow**, además que es una de las máquinas que recomiendan resolver previo al examen del **eCPPT** y decidí incorporarla como mi preparación.
 
 ## Reconocimiento
 
@@ -241,7 +241,7 @@ Existen varias formas de transferir un binario a nuestra máquina virtual, en es
 smbserver.py share . -smb2support -username jch -password password123
 ```
 
-Tras ejecutar el comando previo se nos habilitara un servicio `SMB` con un recurso compartido, en este caso `share` que mostrara todos los recursos que se encuentran en la ruta donde se levanto el servicio y al cual podemos acceder desde desde otros activos, siempre y cuando se encuentren **"dentro"** del mismo segmento red.
+Tras ejecutar el comando previo se nos habilitara un servicio `SMB` con un recurso compartido, en este caso `share` que mostrara todos los recursos que se encuentran en la ruta donde se levanto el servicio y al cual podemos acceder desde otros activos, siempre y cuando se encuentren **"dentro"** del mismo segmento red.
 
 ![Transferencia de gatekeeper](/assets/images/smbGatepeeker.png)
 
@@ -276,7 +276,7 @@ Podemos observar que `gatekeeper.exe` lo que hace es recibir una cadena y luego 
 
 ![Testing gatekeeper](/assets/images/gatekeeperImmunity.png)
 
-Para poder corromper el binario podríamos ir probando enviando una cadena con una cantidad especifica de caracteres, hasta llegar a un número en el cual se desborde el buffer, o podríamos hacerlo mediante un script, que vaya enviando e incrementando cada vez mas la longitud de la cadena hasta lograr corromperlo, como lo veremos a continuación.
+Para poder corromper el binario podríamos ir probando enviando una cadena con una cantidad especifica de caracteres, hasta llegar a un número en el cual se desborde el buffer, o podríamos hacerlo mediante un script que vaya enviando e incrementando cada vez mas la longitud de la cadena hasta lograr corromperlo como lo veremos a continuación.
 
 ```sql
 python3 fuzzer.py 192.168.1.10 31337
@@ -293,7 +293,7 @@ Recordar que todo este proceso lo realizaremos primero de forma local en nuestra
 
 Como pudimos ver al enviar una cadena de 150 bytes el binario se corrompe. Esta cantidad nos sera de ayuda para obtener el valor del offset.
 
-- Crearemos una cadena aleatoria de `150` de caracteres.
+- Crearemos una cadena aleatoria de `150` caracteres.
  
    **Comando:**
 
@@ -312,9 +312,9 @@ Como pudimos ver al enviar una cadena de 150 bytes el binario se corrompe. Esta 
   No olvidar que tras cada ejecución nuestro binario se corromperá, por lo cual debemos **volver** a ejecutarlo.
   {: .notice--danger}
   ```python
-  python obset.py 192.168.1.10 31337
+  python offset.py 192.168.1.10 31337
   ```
-  [obset.py](https://github.com/hacknotes/h4ckn0tes/blob/main/Buffer%20Overflow/Windows/Stack%20Based%2032%20Bits%20(Gatekeeper)/obset.py)
+  [offset.py](https://github.com/hacknotes/h4ckn0tes/blob/main/Buffer%20Overflow/Windows/Stack%20Based%2032%20Bits%20(Gatekeeper)/offset.py)
 
   ![EIP Control Gatekeeper](/assets/images/eipcontrolGatekeeper.png)
 
