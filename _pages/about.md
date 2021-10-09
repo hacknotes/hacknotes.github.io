@@ -4,7 +4,7 @@ title: "Whoami.~"
 permalink: /about/
 author_profile: false
 ---
-Mi nombre es Johnny Chafla, soy Ingeniero en Sistemas de la Información y un apasionado por el campo de la **Ciberseguridad**.
+Mi nombre es **Johnny Chafla**, soy Ingeniero en Sistemas de la Información y un apasionado por el campo de la **Ciberseguridad**.
 
 Uno de entre tantos de mis objetivos es el poder trabajar como **pentester**, por lo cual he decidido mantenerme en constante capacitación, adquiriendo nuevos conocimientos y al mismo tiempo poniéndolos en práctica en entornos controlados creados por mi mismo o en plataformas como [Hackthebox](https://www.hackthebox.eu/) y [Tryhackme](https://tryhackme.com/), además de prepararme para varias certificaciones conocidas en el sector.
 
