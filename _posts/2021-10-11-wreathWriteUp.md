@@ -99,7 +99,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 
 #### 3. Webmin
 
-Como hemos visto en el puerto `10000` se aloja un servicio `Webmin` y que si revisamos nuestros resultados de [nmap](https://hacknotes.gitgub.io/tryhackme/wreathWriteUp/#servicios-y-versiones) veremos que la versión de este servicio es `1.890`.
+Como hemos visto en el puerto `10000` se aloja un servicio `Webmin` y que si revisamos nuestros resultados de [nmap](https://hacknotes.github.io/tryhackme/wreathWriteUp/#servicios-y-versiones) veremos que la versión de este servicio es `1.890`.
 
 Si buscamos esta versión del servicio `Webmin` notaremos que es una versión vulnerable y que gracias a ello podremos ejecutar comandos sobre el sistema que lo aloja.
 
@@ -448,7 +448,7 @@ Para establecer la conexión necesitaremos ejecutar el siguiente comando en la m
 El puerto indicado en el comando anterior debe ser el mismo puerto que abrimos en el [paso anterior](https://hacknotes.github.io/tryhackme/wreathWriteUp/#firewall).
 {: .notice--danger}
 
-Ya establecido nuestro servidor podremos ejecutar el siguiente comando en nuestra máquina local de atacante para poder conectarnos al [servidor](https://hacknotes.github.io/tryhackme/wreathWriteUp/#proxy) establecido con anterioridad para poder acceder a los recursos de la otra máquina `(10.200.198.100)`.
+Ya establecido nuestro servidor podremos ejecutar el siguiente comando en nuestra máquina local de atacante para poder conectarnos al servidor establecido con anterioridad para poder acceder a los recursos de la otra máquina `(10.200.198.100)`.
 
 ```python
 ./chisel client 10.200.198.150:47000 8080:socks
@@ -476,7 +476,7 @@ Si nos percatamos a primera vista esta es la misma pagina web que se nos present
 
 ## Wreath-pc
 
-Gracias a que habíamos encontrado de antes el [proyecto](http://localhost:4000/tryhackme/wreathWriteUp/#websitegit) en `Git-serv` sabemos que este sitio cuenta con una funcionalidad que permite la carga de imágenes en la ruta `/resources` y que su código fuente no cuenta con un buen filtro a la hora de cargar las imágenes.
+Gracias a que habíamos encontrado de antes el [proyecto](https://hacknotes.github.io/tryhackme/wreathWriteUp/#websitegit) en `Git-serv` sabemos que este sitio cuenta con una funcionalidad que permite la carga de imágenes en la ruta `/resources` y que su código fuente no cuenta con un buen filtro a la hora de cargar las imágenes.
 
 No olvidemos que en todo momento estamos pasando por nuestro [proxy](https://hacknotes.github.io/tryhackme/wreathWriteUp/#conexi%C3%B3n) y por el túnel de [ssh](https://hacknotes.github.io/tryhackme/wreathWriteUp/#pivoting) por lo cual estas conexiones deben estar activas.
 {: .notice--danger}
