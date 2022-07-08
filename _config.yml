@@ -20,7 +20,7 @@ title                    : "Hack Notes"
 title_separator          : "-"
 #subtitle                 : "CCNA / eJPT"
 #name                     : "Johnny Chafla"
-description              : "Hack notes Hack tricks Resources Hack the box writeup tryhackeme walkthrough"
+description              : "Hack notes Hack tricks Resources Hack the box writeup tryhackme walkthrough"
 url                      : "https://hacknotes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
@@ -103,7 +103,7 @@ analytics:
 author:
   name             : "Johnny Chafla"
   avatar           : "/assets/images/johnny.jpeg"
-  bio              : "eCPPTv2 / eJPT / Ethical Hacker / CCNA / Ingeniero en Sistemas de Información"
+  bio              : "OSCP / eCPPTv2 / eJPT / CCNA / Ethical Hacker / Ingeniero en Sistemas de la Información"
 #  location         : "Somewhere"
   email            :
   links:

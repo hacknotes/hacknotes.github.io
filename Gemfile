@@ -1,2 +1,6 @@
 source "https://rubygems.org"
-gemspec
+gem "minimal-mistakes-jekyll"
+gem "rake"
+gem "faraday-retry"
+
+gem "webrick", "~> 1.7"
