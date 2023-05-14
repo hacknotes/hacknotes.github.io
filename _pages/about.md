@@ -4,10 +4,15 @@ title: "Whoami.~"
 permalink: /about/
 author_profile: false
 ---
-Mi nombre es **`Johnny Chafla`**, soy Ingeniero en Sistemas de la Información y un apasionado por el campo de la **`Ciberseguridad`**.
+My name is  **`Julián Ortega García`**,  I am a Systems Engineer and I am passionate about the field of **`Cybersecurity`**.
 
-Uno de entre tantos de mis objetivos es el poder trabajar como **`pentester`**, por lo cual he decidido mantenerme en constante capacitación, adquiriendo nuevos conocimientos y al mismo tiempo poniéndolos en práctica en entornos controlados creados por mi mismo o en plataformas como [Hackthebox](https://www.hackthebox.eu/) y [Tryhackme](https://tryhackme.com/), además de prepararme para varias certificaciones conocidas en el sector.
+One of my many objectives is to be able to work as **`pentester`**, Therefore, I have decided to keep myself constantly trained, acquiring new knowledge and at the same time putting it into practice in controlled environments on platforms such as [Hackthebox](https://www.hackthebox.eu/) y [Tryhackme](https://tryhackme.com/), in addition to preparing myself for well-known certifications in the industry.
 
-Actualmente en este transcurso de tiempo he logrado certificaciones como la de Cisco Certified Network Associate **`CCNA`** a nivel de redes e infraestructura, Elearn Security Junior Penetration Tester **`eJPT`** y Elearn Security Certified Professional Penetration Tester **`eCPPTv2`** a nivel de ciberseguridad.
+I am passionate about cybersecurity and data protection. Since discovering my interest in computer science, I have devoted much of my time to learning and experimenting with different pentesting and ethical hacking tools and techniques.
 
-Para finalizar quiero mencionar que el presente sitio web tiene como propósito aportar un granito más de arena a la comunidad con mis tips y notas que he ido documentando para con ellas ayudar a todas aquellas personas que desean incursionar en la ciberseguridad.
+I have used a variety of pentesting and ethical hacking tools, such as Nmap, Metasploit, Wireshark, and Burp Suite, among others. In addition, I have worked on designing and developing customized security systems to meet the specific needs of each client.
+
+I am a proponent of ethical hacking and firmly believe in the importance of performing penetration testing to identify and remediate vulnerabilities in computer systems. I also make sure to stay up-to-date with the latest trends and techniques in cybersecurity by regularly participating in relevant courses and events.
+
+I am always interested in learning and growing in my cybersecurity career, and I am looking for new opportunities to apply my skills and knowledge in the field of pentesting and ethical hacking.
+
